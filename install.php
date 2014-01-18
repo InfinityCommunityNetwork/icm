@@ -78,7 +78,7 @@ if (!isset($_POST['submit'])) {
 	// Database created. Let's create the tables
 		
 	if (($mysqli->multi_query("
-		CREATE TABLE IF NOT EXISTS `icmdb`.`Users` (
+		CREATE TABLE IF NOT EXISTS `icmdb.Users` (
 			`UserID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 			`UserName` VARCHAR(45) NOT NULL,
 			`Password` CHAR(60) NOT NULL,
@@ -89,7 +89,7 @@ if (!isset($_POST['submit'])) {
 			UNIQUE INDEX `UserName_UNIQUE` (`UserName` ASC) )
 			ENGINE = MyISAM;
 
-		CREATE TABLE IF NOT EXISTS `icmdb`.`Groups` (
+		CREATE TABLE IF NOT EXISTS `icmdb.Groups` (
 		  `GroupID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
 		  `GroupName` VARCHAR(80) NOT NULL,
 		  `Ticker` VARCHAR(6) NOT NULL,
@@ -103,7 +103,7 @@ if (!isset($_POST['submit'])) {
 		  UNIQUE INDEX `Ticker_UNIQUE` (`Ticker` ASC) )
 			ENGINE = MyISAM;
 
-		CREATE TABLE IF NOT EXISTS `icmdb`.`Membership` (
+		CREATE TABLE IF NOT EXISTS `icmdb.Membership` (
 		  `UserID` INT UNSIGNED NOT NULL ,
 		  `GroupID` INT UNSIGNED NOT NULL ,
 		  `Status` TINYINT UNSIGNED NOT NULL COMMENT '1 = Member | 2 = Applied | 3 = Invited | 4 = Leader' ,
