@@ -8,8 +8,8 @@ Infinity  Manager
 
 Infinity Community Manager is a PHP and MySQL web application for the organisation of player groups. It is targeted at the community of the upcoming game, [Infinity](#infinity), but is currently a generic community management tool.
 
-Background of this fork
------------------------
+Background
+----------
 
 [Topperfalkon](http://github.com/Topperfalkon) started the Infinity Community Manager project in part to teach himself PHP.
 He acknowledged it was a long way off a usable product and released the code under [CC BY-SA-NC](http://creativecommons.org/licenses/by-nc-sa/3.0/) enabling others to help in the development of the application for the Infinity community.
