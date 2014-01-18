@@ -70,6 +70,6 @@ if (mysql_num_rows($rResult) > 0)
 	}   
 else
 {
-	header( 'Location: /registerform.php?username=' . $user); //This will now punt us to a new registration form instead
+	header( 'Location: '. $siteURL .'/registerform.php?username=' . $user); //This will now punt us to a new registration form instead
 } 
 ?>
