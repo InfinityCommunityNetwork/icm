@@ -5,7 +5,7 @@ include 'config.php';
 session_start();
 
 //make sure the db is alive
-if (!$con)
+if (!$mysqli)
   {
   die('Could not connect: ' . mysql_error());
   }
