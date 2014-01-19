@@ -30,7 +30,7 @@ if (!isset($_POST['submit'])) {
 			<p>Database Name: <input type=\"text\" name=\"dbname\" /></p>
 			<p>DB Username: <input type=\"text\" name=\"dbuser\" /></p>
 			<p>DB Password: <input type=\"password\" name=\"dbpass\" /></p>
-			<p>Please provide the URL of this ICM installation. eg example.com/ or test.example.com/infinity/</p>
+			<p>Please provide the URL of this ICM installation. eg http://example.com/ or http://test.example.com/infinity/</p>
 			<p>Site URL: <input type=\"text\" name=\"siteurl\" /></p>
 			<p><input type=\"submit\" name=\"submit\" value=\"Submit\">
 		</form> 
