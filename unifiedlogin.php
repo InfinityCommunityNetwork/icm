@@ -4,6 +4,8 @@ include 'config.php';
 
 session_start();
 
+//TODO: Actually check at one of the queries to database is successful, and gracefully fail
+
 //make sure the db is alive
 if (!$mysqli) {
 	die('Could not connect: ' . mysqli_error($mysqli));
@@ -16,12 +18,12 @@ $pass=crypt($_POST["loginP"],'$1$test12345678$'); //yummy, encryption so that pe
 mysqli_select_db($mysqli, $dbname);
 
 //check you don't already exist
-$sql = "SELECT * FROM test_users WHERE UserName like '" . $user . "'";
+$sql = "SELECT * FROM icmdb.Users WHERE UserName like '" . $user . "'";
 $rResult = mysqli_query($mysqli, $sql);
 
 if (mysqli_num_rows($rResult) > 0) {
 	//call the sign-in module
-	$sql = "SELECT Password FROM test_users WHERE UserName = '" . $user . "'";
+	$sql = "SELECT Password FROM icmdb.Users WHERE UserName = '" . $user . "'";
 
 	$query = mysqli_query($mysqli, $sql);
 	$row = mysqli_fetch_array($query); //stupidly you still need to get the row from that query.
@@ -32,7 +34,7 @@ if (mysqli_num_rows($rResult) > 0) {
 		die ('Credentials invalid');
 	} else {
 		//check the user is verified.
-		$sql = "SELECT Verified FROM test_users WHERE UserName = '" . $user . "'";
+		$sql = "SELECT Verified FROM icmdb.Users WHERE UserName = '" . $user . "'";
 
 		$query = mysqli_query($mysqli, $sql);
 		$row = mysqli_fetch_array($query); 
