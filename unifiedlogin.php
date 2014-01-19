@@ -6,7 +6,7 @@ session_start();
 
 //make sure the db is alive
 if (!$mysqli) {
-	die('Could not connect: ' . mysqli_error($mysqli
+	die('Could not connect: ' . mysqli_error($mysqli));
 }
 //declare variables from form
 $user = mysqli_real_escape_string($mysqli, $_POST['user']);  //sanitising the input to protect db integrity
