@@ -31,7 +31,7 @@ else
 		<input type=\"password\" id=\"Textbox\" name=\"passtwo\" maxlength=\"255\" /> (required)<br />
 		Email: <br />
 		<input type=\"text\" id=\"Textbox\" name=\"email\" maxlength=\"254\" /> (required)<br /><br />
-		Can other users email you?<input type=\"checkbox\" name=\"canEmail\" value=\"Y\" /> (Admins will always be able to email you)<br />
+		Can other users email you?<input type=\"checkbox\" name=\"canEmail\" value=\"1\" /> (Admins will always be able to email you)<br />
 		<!--<input type=\"text\" id=\"Textbox\" name=\"pass1\" maxlength=\"6\" />
 		<input type=\"text\" id=\"Textbox\" name=\"pass1\" maxlength=\"6\" />
 		<input type=\"text\" id=\"Textbox\" name=\"pass1\" maxlength=\"6\" /> -->

@@ -4,13 +4,13 @@ include 'config.php';
 
 session_start();
 
-//make sure the db is alive
-if (!$con)
+//Make sure the db is alive
+if (!$mysqli)
   {
-  die('Could not connect: ' . mysql_error());
+  die('Could not connect: ' . mysqli_error($mysqli));
   }
 
-//declare variables
+//Variables
 $username=$_GET['user'];
 $verified=$_GET['verified'];
 	//The email link gives us the hash
@@ -19,37 +19,32 @@ $hash=$_GET['hash'];
 $hash0=hash('md5',$username . "keelhaul");
 $comp=strcmp($hash , $hash0);
 
-if($comp != 0)
-{
+if($comp != 0) {
 	echo "You've done something wrong, please <a href=\"index.php\">go back</a>.<br />";
-}
 
-else
-{
+} else {
 	//check that people aren't being naughty and leaving out parameters
-	if(!strlen($username) > 0)
-	{
+	if(!strlen($username) > 0) {
 		echo "You've done something wrong, please <a href=\"index.php\">go back</a>.";
 		die();
 	}
 
-	if(!strlen($verified) > 0)
-	{
+	if(!strlen($verified) > 0) {
 		echo "You've done something wrong, please <a href=\"index.php\">go back</a>.";
 		die();
 	}
 
 	//select the db
-	mysql_select_db($dbname);
+	mysqli_select_db($mysqli, $dbname);
 
-	$sql = "UPDATE test_users 
+	$sql = "UPDATE `icmdb.Users` 
 	SET EmailVerified = 1 
 	where UserName = '" . $username . "'";
 
-	if (!mysql_query($sql))
+	if (!mysqli_query($mysqli, $sql))
 			{
-			die('Error: ' . mysql_error());
+			die('Error: ' . mysqli_error($mysqli));
 			}
-	header ( 'Location: /index.php?v=1'); //take us back to the index with the verified parameter set
+	header( 'Location: '. $siteURL .'/index.php?v=1'); //take us back to the index with the verified parameter set
 }
 ?>
