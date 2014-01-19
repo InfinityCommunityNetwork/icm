@@ -43,7 +43,7 @@ else
 	mysql_select_db($dbname);
 
 	$sql = "UPDATE test_users 
-	SET Verified = 'Y' 
+	SET EmailVerified = 1 
 	where UserName = '" . $username . "'";
 
 	if (!mysql_query($sql))

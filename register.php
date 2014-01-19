@@ -40,7 +40,7 @@ if($_SESSION['login']===1) {
 		die ("This user already exists. Please <a href=\"index.php\">log in</a> or <a href=\"registerform.php\">try again.</a>");
 	} else {
 		//All good, now to add the new user to the database
-		$sqladd= "INSERT INTO `icmdb.Users` (UserName, Password, Email, CanEmail)
+		$sqladd= "INSERT INTO `icmdb.Users` (UserName, Password, Email, EmailVisible)
 		VALUES('$username','$pass','$email','$canEmail')";
 
 		if (!mysqli_query($mysqli, $sqladd)) {
