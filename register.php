@@ -33,14 +33,14 @@ if($_SESSION['login']===1) {
 	}
 	
 	//Check the new user isn't on the database either
-	$rResult = mysqli_query($mysqli, "SELECT * FROM test_users WHERE UserName like '{$username}'");
+	$rResult = mysqli_query($mysqli, "SELECT * FROM `icmdb.Users` WHERE UserName like '{$username}'");
 	
 	if (mysqli_num_rows($rResult) > 0) {
 	//Provide some options in case user already exists. Either try to login again, or try to register again
 		die ("This user already exists. Please <a href=\"index.php\">log in</a> or <a href=\"registerform.php\">try again.</a>");
 	} else {
 		//All good, now to add the new user to the database
-		$sqladd= "INSERT INTO icmdb.Users (UserName, Password, Email, CanEmail)
+		$sqladd= "INSERT INTO `icmdb.Users` (UserName, Password, Email, CanEmail)
 		VALUES('$username','$pass','$email','$canEmail')";
 
 		if (!mysqli_query($mysqli, $sqladd)) {

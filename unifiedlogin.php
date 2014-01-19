@@ -18,12 +18,12 @@ $pass=crypt($_POST["loginP"],'$1$test12345678$'); //yummy, encryption so that pe
 mysqli_select_db($mysqli, $dbname);
 
 //check you don't already exist
-$sql = "SELECT * FROM icmdb.Users WHERE UserName like '" . $user . "'";
+$sql = "SELECT * FROM `icmdb.Users` WHERE UserName like '" . $user . "'";
 $rResult = mysqli_query($mysqli, $sql);
 
 if (mysqli_num_rows($rResult) > 0) {
 	//call the sign-in module
-	$sql = "SELECT Password FROM icmdb.Users WHERE UserName = '" . $user . "'";
+	$sql = "SELECT Password FROM `icmdb.Users` WHERE UserName = '" . $user . "'";
 
 	$query = mysqli_query($mysqli, $sql);
 	$row = mysqli_fetch_array($query); //stupidly you still need to get the row from that query.
@@ -34,7 +34,7 @@ if (mysqli_num_rows($rResult) > 0) {
 		die ('Credentials invalid');
 	} else {
 		//check the user is verified.
-		$sql = "SELECT Verified FROM icmdb.Users WHERE UserName = '" . $user . "'";
+		$sql = "SELECT Verified FROM `icmdb.Users` WHERE UserName = '" . $user . "'";
 
 		$query = mysqli_query($mysqli, $sql);
 		$row = mysqli_fetch_array($query); 
@@ -53,7 +53,7 @@ if (mysqli_num_rows($rResult) > 0) {
 			$_SESSION['username']= $user;
 
 			//See if you have a corp already
-			$sql2 = "SELECT * FROM Test_Corporations WHERE CreatorName like '" . $user . "'";
+			$sql2 = "SELECT * FROM `icmdb.Groups` WHERE Owner like '" . $user . "'";
 			$rResult2 = mysqli_query($mysqli, $sql2);
 			if (mysqli_num_rows($rResult2) > 0) {
 				$_SESSION['corpowner']=1;

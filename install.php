@@ -98,6 +98,7 @@ if (!isset($_POST['submit'])) {
 		  `AllowMulti` TINYINT NOT NULL DEFAULT 1,
 		  `HasLogo` BIT(1) NOT NULL DEFAULT 0,
 		  `Website` VARCHAR(80) NULL,
+		  `Owner` VARCHAR(45) NOT NULL,
 		  PRIMARY KEY (`GroupID`),
 		  UNIQUE INDEX `GroupName_UNIQUE` (`GroupName` ASC),
 		  UNIQUE INDEX `Ticker_UNIQUE` (`Ticker` ASC) )
