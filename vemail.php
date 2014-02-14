@@ -13,10 +13,10 @@ $username=$_GET['user'];
 mysqli_select_db($mysqli, $dbname);
 
 //Get the email address
-$sql = "SELECT Email FROM test_users WHERE UserName = '" . $username . "'";
+$sql = "SELECT Email FROM `icmdb.Users` WHERE UserName = '" . $username . "'";
 
-$query = mysqli_query($mysqli, $sql);
-$row = mysqli_fetch_array($query); 
+$query = $mysqli->query($mysqli, $sql);
+$row = $query->fetch_array($query); 
 $email = $row['Email'];
 
 

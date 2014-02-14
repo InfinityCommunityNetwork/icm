@@ -6,45 +6,44 @@ session_start();
 //make sure you're actually logged in
 if($_SESSION['login']===1)
 {
-	//make sure the db is alive
-	if (!$con)
-	  {
-	  die('Could not connect: ' . mysql_error());
-	  }
+	//Make sure the db is alive
+	if ($mysqli->connect_errno) {
+		die ("Failed to connect to MySQL server: ({$mysqli->connect_errno}) {$mysqli->connect_error}");
+	}
 
-	//declare inputs as variables
-	$username= mysql_real_escape_string ($_SESSION['username']);
-	$corpname= mysql_real_escape_string ($_POST['corpname']);
-	$corpdesc= mysql_real_escape_string ($_POST['Desc']);
-	$corptick= mysql_real_escape_string ($_POST['ticker']);
-	$logoURL= mysql_real_escape_string ($_POST['logoURL']);
-	$corpURL= mysql_real_escape_string ($_POST['corpURL']);
-	$isOpen= $_POST['isOpen'];
-	$allowMulti= $_POST['allowMulti'];
+	//Select the db
+	$mysqli->select_db($dbname);
+
+	//Declare inputs as variables
+	$username= $mysqli->real_escape_string ($_SESSION['username']);
+	$groupname= $mysqli->real_escape_string ($_POST['GroupName']);
+	$description= $mysqli->real_escape_string ($_POST['Description']);
+	$ticker= $mysqli->real_escape_string ($_POST['Ticker']);
+	$logoURL= $mysqli->real_escape_string ($_POST['LogoURL']);
+	$website= $mysqli->real_escape_string ($_POST['Website']);
+	$joinMode= $_POST['JoinMode'];
+	$allowMulti= $_POST['AllowMulti'];
 	  
-	//select the db
-	mysql_select_db($dbname);
-
 	//Check required fields are populated
-	if(!strlen($corpname) > 0)
+	if(!strlen($groupname) > 0)
 	{
 		echo "You missed some required data, please <a href=\"corpreg.php\">try again</a>.";
 		die();
 	}
 
-	if(!strlen($corptick) > 0)
+	if(!strlen($ticker) > 0)
 	{
 		echo "You missed some required data, please <a href=\"corpreg.php\">try again</a>.";
 		die();
 	}
 
 	//check you don't already exist
-	$sql = "SELECT * FROM Test_Corporations WHERE CorpName like '" . $corpname . "'";
-	$rResult = mysql_query($sql);
-	$sqltwo = "SELECT * FROM Test_Corporations WHERE CorpTicker like '" . $corptick . "'";
-	$rResulttwo = mysql_query($sqltwo);
+	$sql = "SELECT * FROM `icmdb.Groups` WHERE GroupName like '" . $corpname . "'";
+	$rResult = $mysqli->query($sql);
+	$sqltwo = "SELECT * FROM `icmdb.Groups` WHERE Ticker like '" . $corptick . "'";
+	$rResulttwo = $mysqli->query($sqltwo);
 	//$sqlthree = "SELECT * FROM Corp_Membership WHERE Username ='" . $username . "' and Allow_Multi = Null"
-	if (mysql_num_rows($rResult) > 0) 
+	if ($mysqli->num_rows($rResult) > 0) 
 	{
 		//The corp's already registered, so give the user a couple of options on how to proceed
 		echo 
@@ -56,9 +55,8 @@ if($_SESSION['login']===1)
 	}
 	//check you don't already exist
 
-	elseif (mysql_num_rows($rResulttwo) > 0) 
+	elseif ($mysqli->num_rows($rResulttwo) > 0) 
 	{
-		//die('Your corp is already registered, please choose a different name'); //dying here is awful. I'd rather try and echo to the server instead
 		echo 
 		(
 		"<p>Your corp ticker is already in use. Sorry about that.<br />
@@ -67,15 +65,16 @@ if($_SESSION['login']===1)
 		<a href=\"index.php\">Back to Main Menu</a><br />"
 		);
 	}
+	
 	//We have to put the users into the database now
 	else
 	{
-		$sqladd="INSERT INTO Test_Corporations (CorpName, CreatorName, IsOpen, CorpTicker, CorpDesc, AllowMulti, CorpURL, Logo)
-		VALUES('$corpname','$username','$isOpen','$corptick','$corpdesc','$allowMulti','$corpURL','$logoURL')";
+		$sqladd="INSERT INTO `icmdb.Groups` (GroupName, Owner, JoinMode, Ticker, Description, AllowMulti, Website, LogoURL)
+		VALUES('$groupname','$username','$joinMode','$ticker','$description','$allowMulti','$website','$logoURL')";
 
-		if (!mysql_query($sqladd))
+		if (!($mysql->query($sqladd)))
 		{
-			die('Error: ' . mysql_error());
+			die('Error: ' . $mysqli->error());
 		}
 
 		$_SESSION['corpowner']= 1;
@@ -90,6 +89,6 @@ if($_SESSION['login']===1)
 }
 else
 {
-	header( 'Location: /index.php');
+	header( 'Location: '. $siteURL .'/index.php');
 }
 ?>

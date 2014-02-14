@@ -97,6 +97,7 @@ if (!isset($_POST['submit'])) {
 		  `JoinMode` TINYINT NOT NULL DEFAULT 0 COMMENT '0 = Corp hidden | 1 = Closed | 2 = Invitation Only | 3 = Open to applications | 4 = Anyone can join',
 		  `AllowMulti` TINYINT NOT NULL DEFAULT 1,
 		  `HasLogo` BIT(1) NOT NULL DEFAULT 0,
+		  `LogoURL` VARCHAR( 80 ) NULL,
 		  `Website` VARCHAR(80) NULL,
 		  `Owner` VARCHAR(45) NOT NULL,
 		  PRIMARY KEY (`GroupID`),

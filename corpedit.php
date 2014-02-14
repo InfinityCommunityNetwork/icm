@@ -13,23 +13,21 @@ include 'config.php';
 
 session_start();
 
-$mysqli = new mysqli($dbserver, $dbuser, $dbpass);
-
-//make sure you're actually logged in
+//Make sure you're actually logged in
 if($_SESSION['login']===1)
 {
-	//make sure the db is alive
+	//Make sure the db is alive
 	if ($mysqli->connect_errno) {
 		die ("Failed to connect to MySQL server: ({$mysqli->connect_errno}) {$mysqli->connect_error}");
 	}
 
-	//select the db
+	//Select the db
 	$mysqli->select_db($dbname);
 
 	$user= $_SESSION['username'];
 
 	//Get a db query  
-	$result = $mysqli->query("SELECT * FROM Test_Corporations WHERE CreatorName = \"" . $user . "\"");
+	$result = $mysqli->query("SELECT * FROM `icmdb.Groups` WHERE Owner = \"" . $user . "\"");
 
 	//Get the results
 	$row = $result->fetch_array();
@@ -53,59 +51,59 @@ if($_SESSION['login']===1)
 		<table border='1'>
 		<tr>
 		<th>Ticker</th>
-		<td><input type=\"text\" id=\"Textbox\" name=\"CorpTicker\"/ value=\"" . $row['CorpTicker'] . "\" maxlength=\"6\" /></td>
+		<td><input type=\"text\" id=\"Textbox\" name=\"Ticker\"/ value=\"" . $row['Ticker'] . "\" maxlength=\"6\" /></td>
 		</tr>
 		<tr>
 		<th>Logo URL</th>
-		<td><input type=\"text\" id=\"Textbox\" name=\"LogoURL\" value=\"" . $row['Logo'] . "\" maxlength=\"255\"/></td>
+		<td><input type=\"text\" id=\"Textbox\" name=\"LogoURL\" value=\"" . $row['LogoURL'] . "\" maxlength=\"255\"/></td>
 		</tr>
 		<tr>
 		<th>Corp Name</th>
-		<td><input type=\"text\" id=\"Textbox\" name=\"CorpName\" value=\"" . $row['CorpName'] . "\" maxlength=\"255\" /></td>
+		<td><input type=\"text\" id=\"Textbox\" name=\"CorpName\" value=\"" . $row['GroupName'] . "\" maxlength=\"255\" /></td>
 		</tr>
 		<tr>
 		<th>Description</th>
-		<td><textarea name=\"Desc\" cols=\"40\" rows=\"7\">" . $row['CorpDesc'] . "</textarea></td>
+		<td><textarea name=\"Desc\" cols=\"40\" rows=\"7\">" . $row['Description'] . "</textarea></td>
 		</tr>
 		<tr>
 		<th>Homepage</th>
-		<td><input type=\"text\" id=\"Textbox\" name=\"CorpURL\" value=\"" . $row['CorpURL'] . "\" maxlength=\"255\" /></td>
+		<td><input type=\"text\" id=\"Textbox\" name=\"Website\" value=\"" . $row['Website'] . "\" maxlength=\"255\" /></td>
 		</tr>"
 		);
 		
 		//check the checkboxes if they were checked originally.
-		if($row['AllowMulti'] = "Y")
-		{
+		if($row['AllowMulti'] = "1") {
 			echo(
 			"<tr>
 			<th>Allows Multiclanning?</th>
-			<td><input type=\"checkbox\" name=\"allowMulti\" value=\"Y\" checked=\"checked\" />(MUST be checked to continue to display as allowing Multiclanning)</td>
+			<td><input type=\"checkbox\" name=\"allowMulti\" value=\"1\" checked=\"checked\" />(MUST be checked to continue to display as allowing Multiclanning)</td>
+			</tr>"
+			);
+		
+		} else {
+			echo(
+			"<tr>
+			<th>Allows Multiclanning?</th>
+			<td><input type=\"checkbox\" name=\"allowMulti\" value=\"1\" />(MUST be checked to continue to display as allowing Multiclanning)</td>
 			</tr>"
 			);
 		}
-		else echo(
-		"<tr>
-		<th>Allows Multiclanning?</th>
-		<td><input type=\"checkbox\" name=\"allowMulti\" value=\"Y\" />(MUST be checked to continue to display as allowing Multiclanning)</td>
-		</tr>"
-		);
-		
-		if($row['IsOpen'] = "Y")
-		{
+
+		if($row['JoinMode'] = "4") {
 			echo(
 			"<tr>	
 			<th>Recruiting?</th>
-			<td><input type=\"checkbox\" name=\"isOpen\" value=\"Y\" checked=\"checked\" /> (MUST be checked to continue to display as Recruiting)</td>
+			<td><input type=\"checkbox\" name=\"isOpen\" value=\"4\" checked=\"checked\" /> (MUST be checked to continue to display as Recruiting)</td>
+			</tr>"
+			);
+		} else {
+			echo(
+			"<tr>	
+			<th>Recruiting?</th>
+			<td><input type=\"checkbox\" name=\"isOpen\" value=\"4\" /> (MUST be checked to continue to display as Recruiting)</td>
 			</tr>"
 			);
 		}
-		else echo(
-		"<tr>	
-		<th>Recruiting?</th>
-		<td><input type=\"checkbox\" name=\"isOpen\" value=\"Y\" /> (MUST be checked to continue to display as Recruiting)</td>
-		</tr>"
-		);
-		
 		echo(
 		"</table>
 		<input type=\"submit\" value=\"Edit\" />
@@ -117,11 +115,10 @@ if($_SESSION['login']===1)
 		</body>
 		</html>"
 	);
-}
-else
-{
-	//go to index
-	header( 'Location: http://test.phoeniximperium.org/index.php');
+
+} else {
+	//Go to index
+	header( 'Location: '. $siteURL .'/index.php');
 }
 
 $mysqli->close($con);
