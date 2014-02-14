@@ -16,7 +16,7 @@ mysqli_select_db($mysqli, $dbname);
 $sql = "SELECT Email FROM `icmdb.Users` WHERE UserName = '" . $username . "'";
 
 $query = $mysqli->query($mysqli, $sql);
-$row = $query->fetch_array($query); 
+$row = mysqli_fetch_array($query); 
 $email = $row['Email'];
 
 
